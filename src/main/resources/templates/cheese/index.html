@@ -5,16 +5,12 @@
     <h1 th:text="${title}"></h1>
 
     <nav th:replace="fragments :: navigation"></nav>
-<p></p>
+<br>
     <p th:unless="${cheeses} and ${cheeses.size()}">no cheese :(</p>
 
-    <form method="post">
         <ul th:each="mapItem : ${cheeses}">
             <li th:text="${mapItem.key + ' : ' + mapItem.value}">Cheese with Description</li>
-            <input type="checkbox" name="${mapItem.key}" value="${mapItem.key}" />
         </ul>
-        <input type="submit" value="Delete" />
-    </form>
 
 </body>
 </html>
