@@ -9,7 +9,7 @@
 <form method="post">
     <div class="form-group">
         <p th:each="mapItem : ${cheeses}">
-            <input type="checkbox" name="${mapItem.key}" />
+            <input type="checkbox" name="cheeses" th:value="${mapItem.key}" />
             <span th:text="${mapItem.key + ' : ' + mapItem.value}">Cheese with Description</span>
         </p>
     </div>
