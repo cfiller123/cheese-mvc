@@ -8,8 +8,10 @@
 <br>
     <p th:unless="${cheeses} and ${cheeses.size()}">no cheese :(</p>
 
-        <ul th:each="mapItem : ${cheeses}">
-            <li th:text="${mapItem.key + ' : ' + mapItem.value}">Cheese with Description</li>
+        <!-- <ul th:each="mapItem : ${cheeses}"> -->
+        <ul th:each="cheese: ${cheeses}">
+            <li th:text="${cheese.getName() + ' : ' + cheese.getDescription()}">Cheese with Description</li>
+            <!-- <li th:text="${mapItem.key + ' : ' + mapItem.value}">Cheese with Description</li> -->
         </ul>
 
 </body>
