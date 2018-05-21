@@ -8,14 +8,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 @Controller
 @RequestMapping("cheese")
 public class CheeseController {
 
     static ArrayList cheeses = new ArrayList();
-    //static HashMap<String, String> cheeses = new HashMap<>();
     
     @RequestMapping(value= "")
     public String index(Model model) {
