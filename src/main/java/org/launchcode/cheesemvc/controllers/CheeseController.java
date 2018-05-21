@@ -31,7 +31,6 @@ public class CheeseController {
     public String processAddCheeseForm(@RequestParam String cheeseName, @RequestParam String description) {
         Cheese newCheese = new Cheese(cheeseName, description);
         cheeses.add(newCheese);
-        //cheeses.put(newCheese.getName(), newCheese.getDescription());
         return "redirect:";
     }
 
@@ -46,7 +45,6 @@ public class CheeseController {
     public String processRemoveCheeseForm(@RequestParam ArrayList<Object> cheeseList) {
         for (Object cheese : cheeseList) {
             cheeses.remove(cheese);
-            //cheeses.remove(cheese);
         }
         return "redirect:";
     }
