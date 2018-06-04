@@ -63,7 +63,7 @@ public class CheeseController {
         CheeseData.getById(cheeseId).setName(name);
         CheeseData.getById(cheeseId).setDescription(description);
 
-        return "redirect:";
+        return "redirect:/cheese";
     }
 
 }
