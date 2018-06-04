@@ -62,6 +62,7 @@ public class CheeseController {
     public String processEditForm(int cheeseId, String name, String description) {
         CheeseData.getById(cheeseId).setName(name);
         CheeseData.getById(cheeseId).setDescription(description);
+
         return "redirect:";
     }
 
