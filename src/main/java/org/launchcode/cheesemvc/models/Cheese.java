@@ -1,8 +1,6 @@
 package org.launchcode.cheesemvc.models;
 
-/**
- * Created by LaunchCode
- */
+
 public class Cheese {
 
     private String name;

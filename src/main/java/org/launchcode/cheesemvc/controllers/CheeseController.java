@@ -6,9 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.launchcode.cheesemvc.models.Cheese;
 
-/**
- * Created by LaunchCode
- */
+
 @Controller
 @RequestMapping("cheese")
 public class CheeseController {
