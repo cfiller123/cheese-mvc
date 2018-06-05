@@ -11,28 +11,47 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("user")
 public class UserController {
 
-    @RequestMapping(value = "user/add", method = RequestMethod.GET)
+    @RequestMapping(value = "add")
     public String add(Model model) {
+        model.addAttribute("title", "User Signup");
         return "user/add";
     }
 
-    @RequestMapping(value = "user/add", method = RequestMethod.POST)
+    @RequestMapping(value = "add", method = RequestMethod.POST)
     public String add(Model model, @ModelAttribute User user, String verify) {
-        model.addAttribute("username", user.getUsername());
-        model.addAttribute("email",user.getEmail());
-
-        if (!model.containsAttribute("username") || !model.containsAttribute("email")) {
-            model.addAttribute("errors", "please enter a username and email");
+        if (verify.equals(user.getPassword())) {
+            model.addAttribute("user", user);
             return "redirect:";
-            }
-
-        else if (user.getPassword() != verify) {
-            model.addAttribute("errors","passwords don't match");
+        } else {
+            model.addAttribute("username", user.getUsername());
+            model.addAttribute("email", user.getEmail());
+            model.addAttribute("title", "User Signup");
+            model.addAttribute("error", "passwords don't match");
             return "user/add";
         }
 
-        return "redirect:";
-
-
     }
 }
+//        model.addAttribute("username", user.getUsername());
+//        model.addAttribute("email",user.getEmail());
+//
+//        if (!model.containsAttribute("username") || !model.containsAttribute("email")) {
+//            model.addAttribute("errors", "please enter a username and email");
+//            return "redirect:";
+//            }
+//
+//        else if (user.getPassword() != verify) {
+//            model.addAttribute("errors","passwords don't match");
+//            return "user/add";
+//        }
+//
+//        else if (user.getUsername().length()>5 & user.getUsername().length()<15) {
+//            model.addAttribute("errors", "your username must be between 5 and 15 letters");
+//            return "user/add";
+//        }
+//
+//        return "redirect:";
+//
+//
+//    }
+//}
