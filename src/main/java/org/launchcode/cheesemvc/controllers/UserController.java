@@ -21,13 +21,18 @@ public class UserController {
         model.addAttribute("username", user.getUsername());
         model.addAttribute("email",user.getEmail());
 
-        if (user.getPassword() == verify) {
+        if (!model.containsAttribute("username") || !model.containsAttribute("email")) {
+            model.addAttribute("errors", "please enter a username and email");
             return "redirect:";
-        }
+            }
 
-        else {
+        else if (user.getPassword() != verify) {
             model.addAttribute("errors","passwords don't match");
             return "user/add";
         }
+
+        return "redirect:";
+
+
     }
 }
