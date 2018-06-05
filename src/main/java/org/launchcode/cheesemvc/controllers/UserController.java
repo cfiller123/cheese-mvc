@@ -21,8 +21,10 @@ public class UserController {
     public String add(Model model, @ModelAttribute User user, String verify) {
         if (verify.equals(user.getPassword())) {
             model.addAttribute("user", user);
-            return "redirect:";
-        } else {
+            return "user/index";
+        }
+
+        else {
             model.addAttribute("username", user.getUsername());
             model.addAttribute("email", user.getEmail());
             model.addAttribute("title", "User Signup");
