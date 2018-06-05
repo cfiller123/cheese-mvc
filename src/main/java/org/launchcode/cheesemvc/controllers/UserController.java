@@ -11,16 +11,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("user")
 public class UserController {
 
-
     @RequestMapping(value = "user/add", method = RequestMethod.GET)
-    public String displayAddUserForm(Model model) {
-
+    public String add(Model model) {
         return "user/add";
     }
 
     @RequestMapping(value = "user/add", method = RequestMethod.POST)
     public String add(Model model, @ModelAttribute User user, String verify) {
-        model.addAttribute("user", user.getUsername());
+        model.addAttribute("username", user.getUsername());
         model.addAttribute("email",user.getEmail());
 
         if (user.getPassword() == verify) {
