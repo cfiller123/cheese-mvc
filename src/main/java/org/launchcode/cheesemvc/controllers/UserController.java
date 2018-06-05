@@ -20,12 +20,15 @@ public class UserController {
 
     @RequestMapping(value = "user/add", method = RequestMethod.POST)
     public String add(Model model, @ModelAttribute User user, String verify) {
+        model.addAttribute("user", user.getUsername());
+        model.addAttribute("email",user.getEmail());
 
         if (user.getPassword() == verify) {
-            return "redirect:/";
+            return "redirect:";
         }
 
         else {
+            model.addAttribute("errors","passwords don't match");
             return "user/add";
         }
     }
