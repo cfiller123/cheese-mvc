@@ -15,7 +15,6 @@ import javax.validation.Valid;
 @RequestMapping("cheese")
 public class CheeseController {
 
-    // Request path: /cheese
     @RequestMapping(value = "")
     public String index(Model model) {
         model.addAttribute("cheeses", CheeseData.getAll());
@@ -26,7 +25,7 @@ public class CheeseController {
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String displayAddCheeseForm(Model model) {
         model.addAttribute("title", "Add Cheese");
-        model.addAttribute(new Cheese());
+        model.addAttribute(new Cheese()); //this is giving an extra id number
         model.addAttribute("cheeseTypes",CheeseType.values());
         return "cheese/add";
     }
@@ -68,16 +67,16 @@ public class CheeseController {
 
     @RequestMapping(value = "edit", method = RequestMethod.POST)
     public String processEditForm(@ModelAttribute @Valid int cheeseId, String name, String description,
-                                  CheeseType cheeseType, Error errors, Model model) {
+                                  CheeseType cheeseType, Errors errors, Model model) {
 
-//        if (errors.hasErrors()) {
-//            model.addAttribute("title","Add Cheese");
-//            model.addAttribute("cheeseTypes",CheeseType.values());
-//            return "cheese/edit/{cheeseId}";
-//        }
+        if (errors.hasErrors()) {
+            model.addAttribute("title","Add Cheese");
+            model.addAttribute("cheeseTypes",CheeseType.values());
+            return "cheese/edit/{cheeseId}";
+        }
 
         Cheese c = CheeseData.getById(cheeseId);
-        c.setType(cheeseType);
+//        c.setType(cheeseType);
         c.setName(name);
         c.setDescription(description);
         return "redirect:";
