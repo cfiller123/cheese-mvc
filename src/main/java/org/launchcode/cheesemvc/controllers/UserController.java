@@ -17,43 +17,25 @@ public class UserController {
         return "user/add";
     }
 
+
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String add(Model model, @ModelAttribute User user, String verify) {
         if (verify.equals(user.getPassword())) {
             model.addAttribute("user", user);
             return "user/index";
-        }
 
-        else {
+        } else {
             model.addAttribute("username", user.getUsername());
             model.addAttribute("email", user.getEmail());
             model.addAttribute("title", "User Signup");
-            model.addAttribute("error", "passwords don't match");
+            model.addAttribute("message", "Passwords do not match");
             return "user/add";
+
         }
 
     }
+
 }
-//        model.addAttribute("username", user.getUsername());
-//        model.addAttribute("email",user.getEmail());
-//
-//        if (!model.containsAttribute("username") || !model.containsAttribute("email")) {
-//            model.addAttribute("errors", "please enter a username and email");
-//            return "redirect:";
-//            }
-//
-//        else if (user.getPassword() != verify) {
-//            model.addAttribute("errors","passwords don't match");
-//            return "user/add";
-//        }
-//
-//        else if (user.getUsername().length()>5 & user.getUsername().length()<15) {
-//            model.addAttribute("errors", "your username must be between 5 and 15 letters");
-//            return "user/add";
-//        }
-//
-//        return "redirect:";
-//
-//
-//    }
-//}
+
+
+
