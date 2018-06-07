@@ -34,14 +34,16 @@ public class CheeseController {
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public String processAddCheeseForm(@ModelAttribute @Valid Cheese newCheese,
-                                       Errors errors, Model model) {
+    public String processAddCheeseForm(Model model, @ModelAttribute @Valid Cheese newCheese,
+                                       Errors errors) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title","Add Cheese");
+            model.addAttribute(new Cheese());
+            model.addAttribute("cheeseTypes",CheeseType.values());
+
             return "cheese/add";
         }
-
 
         CheeseData.add(newCheese);
         return "redirect:";
@@ -56,32 +58,32 @@ public class CheeseController {
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
     public String processRemoveCheeseForm(@RequestParam int[] cheeseIds) {
-
         for (int cheeseId : cheeseIds) {
             CheeseData.remove(cheeseId);
         }
-
         return "redirect:";
     }
 
-    @RequestMapping(value ="edit/{cheeseId}", method = RequestMethod.GET)
+    @RequestMapping(value = "edit/{cheeseId}")
     public String displayEditForm(Model model, @PathVariable int cheeseId) {
-        model.addAttribute("cheese", CheeseData.getById(cheeseId));
+        Cheese c = CheeseData.getById(cheeseId);
+        model.addAttribute("cheese", c);
         model.addAttribute(new Cheese());
         model.addAttribute("cheeseTypes",CheeseType.values());
         return "cheese/edit";
     }
 
-    @RequestMapping(value ="edit/{cheeseId}", method = RequestMethod.POST)
-    public String processEditForm(@ModelAttribute @Valid Cheese newCheese, Errors errors, Model model,
-                                  int cheeseId, String name, String description) {
-        CheeseData.getById(cheeseId).setName(name);
-        CheeseData.getById(cheeseId).setDescription(description);
 
-        return "redirect:/cheese";
+
+    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    public String processEditForm(Model model, int cheeseId, @ModelAttribute @Valid String name, String description,
+                                  CheeseType cheeseType, Error errors) {
+        Cheese c = CheeseData.getById(cheeseId);
+        c.setType(cheeseType);
+        c.setName(name);
+        c.setDescription(description);
+        return "redirect:";
     }
 
-}
 
-//@ModelAttribute @Valid Cheese newCheese,
-//                                       Errors errors, Model model
+}
