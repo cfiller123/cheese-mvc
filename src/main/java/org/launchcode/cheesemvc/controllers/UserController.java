@@ -23,31 +23,20 @@ public class UserController {
 
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public String add(Model model, @ModelAttribute @Valid User user, Errors errors, String verify) {
+    public String add(Model model, @ModelAttribute @Valid User user, Errors errors) {
 
         if (errors.hasErrors()) {
             model.addAttribute(user);
+            model.addAttribute("username",user.getUsername());
+            model.addAttribute("email", user.getEmail());
+            model.addAttribute("password","");
+            model.addAttribute("title","User Signup");
             return "user/add";
         }
 
-        if (user.getPassword().isEmpty() || verify.isEmpty()) {
-            model.addAttribute(user);
-            model.addAttribute("message", "you must enter a password and verify");
-            return "user/add";
-        }
-
-        if (verify.equals(user.getPassword())) {
+        else {
             model.addAttribute("user", user);
             return "user/index";
-
-        } else {
-            model.addAttribute("username", user.getUsername());
-            model.addAttribute("email", user.getEmail());
-            model.addAttribute("password", "");
-            model.addAttribute("title", "User Signup");
-            model.addAttribute("message", "your passwords don't match");
-            model.addAttribute(user);
-            return "user/add";
 
         }
 

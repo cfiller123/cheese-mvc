@@ -1,6 +1,7 @@
 package org.launchcode.cheesemvc.models;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NegativeOrZero;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -17,7 +18,17 @@ public class User {
     @NotNull
     private String password;
 
+    @NotNull(message="Passwords do not match")
+    private String verifyPassword;
+
     public User() {
+
+    }
+
+    private void checkPassword(String password, String verifyPassword) {
+        if ((!password.equals(verifyPassword)) || password.isEmpty()) {
+            this.verifyPassword = null;
+        }
 
     }
 
@@ -43,6 +54,15 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+        checkPassword(password, verifyPassword);
     }
 
+    public String getVerifyPassword() {
+        return verifyPassword;
+    }
+
+    public void setVerifyPassword(String verifyPassword) {
+        this.verifyPassword = verifyPassword;
+        checkPassword(password, verifyPassword);
+    }
 }
