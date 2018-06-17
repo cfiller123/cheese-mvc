@@ -1,9 +1,5 @@
 package org.launchcode.cheesemvc.models;
 
-import org.graalvm.compiler.nodeinfo.StructuralInput;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.Range;
-
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
