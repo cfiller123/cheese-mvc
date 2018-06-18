@@ -1,7 +1,8 @@
 package org.launchcode.cheesemvc.controllers;
 
-import org.launchcode.cheesemvc.models.CheeseData;
 import org.launchcode.cheesemvc.models.CheeseType;
+import org.launchcode.cheesemvc.models.data.CheeseDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -15,9 +16,12 @@ import javax.validation.Valid;
 @RequestMapping("cheese")
 public class CheeseController {
 
+    @Autowired
+    private CheeseDao cheeseDao;
+
     @RequestMapping(value = "")
     public String index(Model model) {
-        model.addAttribute("cheeses", CheeseData.getAll());
+        model.addAttribute("cheeses", cheeseDao.findAll());
         model.addAttribute("title", "My Cheeses");
         return "cheese/index";
     }
@@ -38,13 +42,13 @@ public class CheeseController {
             model.addAttribute("cheeseTypes",CheeseType.values());
             return "cheese/add";
         }
-        CheeseData.add(newCheese);
+        cheeseDao.save(newCheese);
         return "redirect:";
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.GET)
     public String displayRemoveCheeseForm(Model model) {
-        model.addAttribute("cheeses", CheeseData.getAll());
+        model.addAttribute("cheeses", cheeseDao.findAll());
         model.addAttribute("title", "Remove Cheese");
         return "cheese/remove";
     }
@@ -52,33 +56,33 @@ public class CheeseController {
     @RequestMapping(value = "remove", method = RequestMethod.POST)
     public String processRemoveCheeseForm(@RequestParam int[] cheeseIds) {
         for (int cheeseId : cheeseIds) {
-            CheeseData.remove(cheeseId);
+            cheeseDao.delete(cheeseId);
         }
         return "redirect:";
     }
 
-    @RequestMapping(value = "edit/{cheeseId}")
-    public String displayEditForm(Model model, @PathVariable int cheeseId) {
-        Cheese c = CheeseData.getById(cheeseId);
-        model.addAttribute("cheese", c);
-        model.addAttribute("cheeseTypes",CheeseType.values());
-        return "cheese/edit";
-    }
-
-    @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public String processEditForm(@ModelAttribute @Valid Cheese cheese, Errors errors, Model model) {
-
-        if (errors.hasErrors()) {
-            model.addAttribute("title","Add Cheese");
-            model.addAttribute("cheeseTypes",CheeseType.values());
-            return "cheese/edit";
-        }
-
-        Cheese c = CheeseData.getById(cheese.getCheeseId());
-        c.setName(cheese.getName());
-        c.setType(cheese.getType());
-        c.setDescription(cheese.getDescription());
-        return "redirect:";
-    }
+//    @RequestMapping(value = "edit/{cheeseId}")
+//    public String displayEditForm(Model model, @PathVariable int cheeseId) {
+//        Cheese c = CheeseData.getById(cheeseId);
+//        model.addAttribute("cheese", c);
+//        model.addAttribute("cheeseTypes",CheeseType.values());
+//        return "cheese/edit";
+//    }
+//
+//    @RequestMapping(value = "edit", method = RequestMethod.POST)
+//    public String processEditForm(@ModelAttribute @Valid Cheese cheese, Errors errors, Model model) {
+//
+//        if (errors.hasErrors()) {
+//            model.addAttribute("title","Add Cheese");
+//            model.addAttribute("cheeseTypes",CheeseType.values());
+//            return "cheese/edit";
+//        }
+//
+//        Cheese c = CheeseData.getById(cheese.getCheeseId());
+//        c.setName(cheese.getName());
+//        c.setType(cheese.getType());
+//        c.setDescription(cheese.getDescription());
+//        return "redirect:";
+//    }
 
 }
